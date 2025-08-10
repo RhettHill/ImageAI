@@ -123,6 +123,45 @@
   }
 }
 
+.root{
+  @apply flex min-h-screen w-full bg-white;;
+}
+
+.root-container{
+  @apply m-16 flex-1 overflow-auto py-8 lg:mt-0 lg:max-h-screen lg:py-10
+}
+
+.transforming-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 10;
+  border-radius: 8px; /* match image border radius */
+}
+
+.download-btn {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home {
+    @apply sm:flex items-center justify-center hidden h-72 flex-col gap-4 rounded-[20px] border bg-cover bg-no-repeat p-10 shadow-inner;
+  }
+
+
 
 
 /* =====  CLERK OVERRIDES */

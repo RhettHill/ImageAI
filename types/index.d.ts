@@ -25,8 +25,8 @@ declare type AddImageParams = {
     width: number;
     height: number;
     config: any;
-    secureURL: string;
-    transformationURL: string;
+    secureUrl: string;
+    transformationUrl: string;
     aspectRatio: string | undefined;
     prompt: string | undefined;
     color: string | undefined;
@@ -44,8 +44,8 @@ declare type UpdateImageParams = {
     width: number;
     height: number;
     config: any;
-    secureURL: string;
-    transformationURL: string;
+    secureUrl: string;
+    transformationUrl: string;
     aspectRatio: string | undefined;
     prompt: string | undefined;
     color: string | undefined;
@@ -116,6 +116,8 @@ declare type SearchParamProps = {
   params: { id: string; type: TransformationTypeKey };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+
 
 declare type TransformationFormProps = {
   action: "Add" | "Update";

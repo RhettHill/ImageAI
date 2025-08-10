@@ -83,7 +83,7 @@ export function removeKeysFromQuery({
   return `${window.location.pathname}?${qs.stringify(currentUrl)}`;
 }
 
-// DEBOUNCE - generic
+// DEBOUNCE
 export const debounce = <T extends (...args: unknown[]) => void>(
   func: T,
   delay: number
@@ -134,28 +134,23 @@ export const download = (url: string, filename: string) => {
     .catch((error) => console.log({ error }));
 };
 
-export const deepMergeObjects = <T extends Record<string, unknown>>(
-  obj1: T,
-  obj2: Partial<T> | null | undefined
-): T => {
-  if (obj2 == null) {
+// DEEP MERGE OBJECTS
+export const deepMergeObjects = (obj1: any, obj2: any) => {
+  if(obj2 === null || obj2 === undefined) {
     return obj1;
   }
 
-  const output = { ...obj2 } as T;
+  let output = { ...obj2 };
 
-  for (const key in obj1) {
-    if (Object.prototype.hasOwnProperty.call(obj1, key)) {
+  for (let key in obj1) {
+    if (obj1.hasOwnProperty(key)) {
       if (
+        obj1[key] &&
         typeof obj1[key] === "object" &&
-        obj1[key] !== null &&
-        typeof obj2[key] === "object" &&
-        obj2[key] !== null
+        obj2[key] &&
+        typeof obj2[key] === "object"
       ) {
-        output[key] = deepMergeObjects(
-          obj1[key] as Record<string, unknown>,
-          obj2[key] as Record<string, unknown>
-        ) as T[Extract<keyof T, string>];
+        output[key] = deepMergeObjects(obj1[key], obj2[key]);
       } else {
         output[key] = obj1[key];
       }
