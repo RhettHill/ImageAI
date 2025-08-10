@@ -12,10 +12,8 @@ type HomeProps = {
 };
 
 const Home = async ({ searchParams }: HomeProps) => {
-  const params = await searchParams; // 👈 await it once here
-
-  const page = Number(params.page) || 1;
-  const searchQuery = params.query || "";
+  const page = Number((await searchParams).page) || 1;
+  const searchQuery = (await searchParams).query || "";
 
   const images = await getAllImages({ page, searchQuery });
 

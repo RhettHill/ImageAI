@@ -9,7 +9,7 @@ import { getUserById } from "@/lib/actions/user.actions";
 
 const Profile = async ({ searchParams }: SearchParamProps) => {
   const params = await searchParams;
-  const page = (await Number(params?.page)) || 1;
+  const page = Number(params.page) || 1;
   const { userId } = await auth();
 
   if (!userId) redirect("/sign-in");

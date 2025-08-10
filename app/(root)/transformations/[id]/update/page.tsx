@@ -8,7 +8,7 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { getImageById } from "@/lib/actions/image.actions";
 
 const Page = async (props: SearchParamProps) => {
-  const { params } = await props;
+  const { params } = props;
   const { id } = await params;
   const { userId } = await auth();
 
