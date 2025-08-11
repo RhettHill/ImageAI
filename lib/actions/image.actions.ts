@@ -7,11 +7,11 @@ import User from "../database/models/user.model";
 import Image from "../database/models/image.model";
 import { redirect } from "next/navigation";
 
-import { v2 as cloudinary } from 'cloudinary';
+import cloudinary from 'cloudinary';
 import { Query } from "mongoose";
 
 // Configure cloudinary once at module level
-cloudinary.config({
+cloudinary.v2.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -120,7 +120,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
 
     let resources = [];
     try {
-      const result = await cloudinary.search
+      const result = await cloudinary.v2.search
         .expression(expression)
         .execute();
       resources = result.resources || [];
