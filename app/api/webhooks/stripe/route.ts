@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { createTransaction } from "@/lib/actions/transaction.action";
+import { updateCredits } from "@/lib/actions/user.actions"; // <- add this import
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -7,13 +8,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(request: Request) {
   const body = await request.text();
-
   const sig = request.headers.get("stripe-signature") as string;
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
   if (!endpointSecret) {
     console.error("Missing STRIPE_WEBHOOK_SECRET");
-    return NextResponse.json({ message: "Webhook secret not configured" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Webhook secret not configured" },
+      { status: 500 }
+    );
   }
 
   let event;
@@ -25,12 +28,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Webhook error", error: err });
   }
 
-  // Get the ID and type
   const eventType = event.type;
 
-  // CREATE
   if (eventType === "checkout.session.completed") {
-    const { id, amount_total, metadata } = event.data.object;
+    const { id, amount_total, metadata } = event.data.object as Stripe.Checkout.Session;
 
     const transaction = {
       stripeId: id,
@@ -41,8 +42,9 @@ export async function POST(request: Request) {
       createdAt: new Date(),
     };
 
+    // 1️⃣ Save the transaction
     const newTransaction = await createTransaction(transaction);
-    
+
     return NextResponse.json({ message: "OK", transaction: newTransaction });
   }
 

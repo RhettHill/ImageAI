@@ -13,7 +13,7 @@ const result = await cloudinary.search
   .expression("folder=imaginify")
   .execute();
 
-
+  
 const populateUser = (query: Query<any, any>) => {
   return query.populate({
     path: "author",
@@ -128,6 +128,7 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
     }
 
     const resourceIds = resources.map((resource: any) => resource.public_id);
+
 
     let query = {};
 
