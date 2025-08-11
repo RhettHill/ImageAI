@@ -1,7 +1,11 @@
 /* eslint-disable camelcase */
 import { createTransaction } from "@/lib/actions/transaction.action";
 import { NextResponse } from "next/server";
-import stripe from "stripe";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2024-12-18.acacia',
+});
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -9,11 +13,17 @@ export async function POST(request: Request) {
   const sig = request.headers.get("stripe-signature") as string;
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
+  if (!endpointSecret) {
+    console.error("Missing STRIPE_WEBHOOK_SECRET");
+    return NextResponse.json({ message: "Webhook secret not configured" }, { status: 500 });
+  }
+
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(body, sig, endpointSecret) as Stripe.Event;
   } catch (err) {
+    console.error("Webhook signature verification failed:", err);
     return NextResponse.json({ message: "Webhook error", error: err });
   }
 

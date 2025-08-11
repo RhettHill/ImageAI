@@ -1,11 +1,20 @@
 import { clerkClient } from "@clerk/clerk-sdk-node";
-import { WebhookEvent, UserJSON } from "@clerk/nextjs/server";
+import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
-import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
+
+// Define UserJSON type locally since it might not be exported
+type UserJSON = {
+  id: string;
+  email_addresses: Array<{ email_address: string }>;
+  username?: string;
+  first_name?: string;
+  last_name?: string;
+  image_url?: string;
+};
 
 export async function POST(req: Request): Promise<NextResponse> {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -16,7 +25,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   }
 
   // Get headers (need to await)
-  const headerPayload = await headers() as ReadonlyHeaders;
+  const headerPayload = await headers();
   const svixId = headerPayload.get("svix-id");
   const svixTimestamp = headerPayload.get("svix-timestamp");
   const svixSignature = headerPayload.get("svix-signature");
@@ -57,9 +66,14 @@ export async function POST(req: Request): Promise<NextResponse> {
     });
 
     if (newUser) {
-      await clerkClient.users.updateUserMetadata(userData.id, {
-        publicMetadata: { userId: newUser._id },
-      });
+      try {
+        await clerkClient.users.updateUserMetadata(userData.id, {
+          publicMetadata: { userId: newUser._id },
+        });
+      } catch (clerkError) {
+        console.error("Failed to update Clerk metadata:", clerkError);
+        // Don't throw here, user creation was successful
+      }
     }
     return NextResponse.json({ message: "OK", user: newUser });
   }

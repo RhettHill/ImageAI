@@ -29,11 +29,9 @@ const MediaUploader = ({
       publicId: result.info.public_id,
       width: result.info.width,
       height: result.info.height,
-      secureUrl: result.info.secure_url, // fix here
+      secureUrl: result.info.secure_url,
       alt: "image",
     }));
-
-    console.log("secureURL: ", result.info.secure_url);
 
     onValueChange(result.info.public_id);
 

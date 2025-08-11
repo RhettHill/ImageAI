@@ -7,8 +7,16 @@ import User from "../database/models/user.model";
 import Image from "../database/models/image.model";
 import { redirect } from "next/navigation";
 
-import { v2 as cloudinary } from 'cloudinary'
+import { v2 as cloudinary } from 'cloudinary';
 import { Query } from "mongoose";
+
+// Configure cloudinary once at module level
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 const populateUser = (query: Query<any, any>) => {
   return query.populate({
@@ -104,22 +112,22 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
   try {
     await connectToDatabase();
 
-    cloudinary.config({
-      cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-      api_key: process.env.CLOUDINARY_API_KEY,
-      api_secret: process.env.CLOUDINARY_API_SECRET,
-      secure: true,
-    })
-
     let expression = 'folder=imaginify';
 
     if (searchQuery) {
       expression += ` AND ${searchQuery}`
     }
 
-    const { resources } = await cloudinary.search
-      .expression(expression)
-      .execute();
+    let resources = [];
+    try {
+      const result = await cloudinary.search
+        .expression(expression)
+        .execute();
+      resources = result.resources || [];
+    } catch (cloudinaryError) {
+      console.error('Cloudinary search error:', cloudinaryError);
+      // Continue with empty resources array
+    }
 
     const resourceIds = resources.map((resource: any) => resource.public_id);
 
