@@ -116,7 +116,9 @@ export async function getAllImages({ limit = 9, page = 1, searchQuery = '' }: {
 
     let resources = [];
     try {
+
       const result = await cloudinary.search
+
         .expression(expression)
         .execute();
       resources = result.resources || [];
