@@ -59,7 +59,7 @@ const Checkout = ({
       <Button
         type="button"
         role="link"
-        className="w-full rounded-full bg-purple-gradient bg-cover"
+        className="w-full rounded-full bg-purple-600"
         onClick={onCheckout}
       >
         Buy Credit

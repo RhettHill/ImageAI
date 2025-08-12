@@ -42,44 +42,16 @@ const Credits = async () => {
               <p className="text-sm text-gray-600">{plan.credits} Credits</p>
             </div>
 
-            {/* Features */}
-            <ul className="mt-6 flex flex-col gap-4">
-              {plan.inclusions.map((inclusion) => (
-                <li
-                  key={plan.name + inclusion.label}
-                  className="flex items-center gap-3"
-                >
-                  <Image
-                    src={`/assets/icons/${
-                      inclusion.isIncluded ? "check.svg" : "cross.svg"
-                    }`}
-                    alt={inclusion.label}
-                    width={20}
-                    height={20}
-                  />
-                  <span className="text-sm text-gray-700">
-                    {inclusion.label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
             {/* Action */}
             <div className="mt-6">
-              {plan.name === "Free" ? (
-                <Button variant="outline" className="w-full">
-                  Free Consumable
-                </Button>
-              ) : (
-                <SignedIn>
-                  <Checkout
-                    plan={plan.name}
-                    amount={plan.price}
-                    credits={plan.credits}
-                    buyerId={user._id}
-                  />
-                </SignedIn>
-              )}
+              <SignedIn>
+                <Checkout
+                  plan={plan.name}
+                  amount={plan.price}
+                  credits={plan.credits}
+                  buyerId={user._id}
+                />
+              </SignedIn>
             </div>
           </div>
         ))}
