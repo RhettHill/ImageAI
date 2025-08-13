@@ -6,6 +6,75 @@ import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import React from "react";
 
+// Helper function to format transformation config for Cloudinary
+const formatTransformationConfig = (config: any) => {
+  if (!config) return {};
+
+  const formattedConfig: any = {};
+
+  // Handle each transformation type with proper Cloudinary formatting
+  if (config.restore) {
+    formattedConfig.enhance = true;
+  }
+
+  if (config.removeBackground) {
+    formattedConfig.removeBackground = true;
+  }
+
+  if (config.fillBackground) {
+    formattedConfig.fillBackground = true;
+  }
+
+  if (config.remove) {
+    formattedConfig.remove = config.remove;
+  }
+
+  if (config.recolor) {
+    formattedConfig.recolor = config.recolor;
+  }
+
+  if (config.blur) {
+    formattedConfig.blur = `${config.blur}`;
+  }
+
+  if (config.sharpen) {
+    formattedConfig.sharpen = true;
+  }
+
+  if (config.grayscale) {
+    formattedConfig.grayscale = true;
+  }
+
+  if (config.sepia) {
+    formattedConfig.sepia = true;
+  }
+
+  if (config.pixelate) {
+    formattedConfig.pixelate = true;
+  }
+
+  if (config.cartoonify) {
+    formattedConfig.cartoonify = true;
+  }
+
+  if (config.oilPaint) {
+    formattedConfig.oilPaint = true;
+  }
+
+  if (config.vignette) {
+    formattedConfig.vignette = true;
+  }
+
+  if (config.colorize) {
+    formattedConfig.colorize = `${config.colorize.level}:${config.colorize.color}`;
+  }
+
+  if (config.improve) {
+    formattedConfig.improve = true;
+  }
+
+  return formattedConfig;
+};
 const TransformedImage = ({
   image,
   type,
@@ -25,7 +94,7 @@ const TransformedImage = ({
         width: image?.width,
         height: image?.height,
         src: image?.publicId,
-        ...transformationConfig,
+        ...formatTransformationConfig(transformationConfig),
       }),
       title
     );
@@ -68,7 +137,7 @@ const TransformedImage = ({
                 setIsTransforming && setIsTransforming(false);
               }, 8000)();
             }}
-            {...transformationConfig}
+            {...formatTransformationConfig(transformationConfig)}
           />
 
           {isTransforming && (
