@@ -27,7 +27,7 @@ const Sidebar = () => {
           <SignedIn>
             {/* First half of nav */}
             <ul className="flex flex-col gap-2">
-              {navLinks.slice(0, 6).map((link) => {
+              {navLinks.slice(0, 11).map((link) => {
                 const isActive = link.route === pathname;
                 return (
                   <li
@@ -58,7 +58,7 @@ const Sidebar = () => {
 
             {/* Second half of nav */}
             <ul className="flex flex-col gap-2">
-              {navLinks.slice(6).map((link) => {
+              {navLinks.slice(11).map((link) => {
                 const isActive = link.route === pathname;
                 return (
                   <li

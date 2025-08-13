@@ -68,6 +68,19 @@ declare type Transformations = {
     multiple?: boolean;
   };
   removeBackground?: boolean;
+  blur?: number;
+  sharpen?: boolean;
+  grayscale?: boolean;
+  sepia?: boolean;
+  pixelate?: boolean;
+  cartoonify?: boolean;
+  oilPaint?: boolean;
+  vignette?: boolean;
+  colorize?: {
+    level: number;
+    color: string;
+  };
+  improve?: boolean;
 };
 
 // ====== TRANSACTION PARAMS
@@ -92,7 +105,17 @@ declare type TransformationTypeKey =
   | "fill"
   | "remove"
   | "recolor"
-  | "removeBackground";
+  | "removeBackground"
+  | "blur"
+  | "sharpen"
+  | "grayscale"
+  | "sepia"
+  | "pixelate"
+  | "cartoonify"
+  | "oilPaint"
+  | "vignette"
+  | "colorize"
+  | "improve";
 
 // ====== URL QUERY PARAMS
 declare type FormUrlQueryParams = {

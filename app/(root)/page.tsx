@@ -22,7 +22,7 @@ const Home = async ({ searchParams }: HomeProps) => {
       <section className="home">
         <h1 className="text-4xl font-bold">Unleash your visions</h1>
         <ul className="flex items-center justify-center">
-          {navLinks.slice(1, 5).map((link) => (
+          {navLinks.slice(1, 6).map((link) => (
             <li key={link.route} className="mx-4">
               <Link
                 href={link.route}
