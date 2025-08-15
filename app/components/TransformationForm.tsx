@@ -176,30 +176,6 @@ const TransformationForm = ({
     onChangeField: (value: string) => void
   ) => {
     debounce(() => {
-<<<<<<< HEAD
-      if (type === "blur") {
-        setNewTransformation((prevState: any) => ({
-          ...prevState,
-          [type]: parseInt(value) || 300,
-        }));
-      } else if (type === "colorize") {
-        setNewTransformation((prevState: any) => ({
-          ...prevState,
-          [type]: {
-            ...prevState?.[type],
-            [fieldName]: fieldName === "level" ? parseInt(value) || 50 : value,
-          },
-        }));
-      } else {
-        setNewTransformation((prevState: any) => ({
-          ...prevState,
-          [type]: {
-            ...prevState?.[type],
-            [fieldName === "prompt" ? "prompt" : "to"]: value,
-          },
-        }));
-      }
-=======
       setNewTransformation((prevState: any) => ({
         ...prevState,
         ...(type === "rotate"
@@ -211,7 +187,6 @@ const TransformationForm = ({
               },
             }),
       }));
->>>>>>> a88a43e (Rotate, Enhance, Search)
     }, 1000)();
 
     return onChangeField(value.toString());
@@ -235,14 +210,10 @@ const TransformationForm = ({
   };
 
   useEffect(() => {
-<<<<<<< HEAD
-    if (image && (type === "restore" || type === "removeBackground" || type === "sharpen" || type === "grayscale" || type === "sepia" || type === "pixelate" || type === "cartoonify" || type === "oilPaint" || type === "vignette" || type === "improve")) {
-=======
     if (
       image &&
       (type === "restore" || type === "removeBackground" || type === "enhance")
     ) {
->>>>>>> a88a43e (Rotate, Enhance, Search)
       setNewTransformation(transformationType.config);
     }
   }, [image, transformationType.config, type]);
@@ -355,44 +326,22 @@ const TransformationForm = ({
           </div>
         )}
 
-<<<<<<< HEAD
-        {/* Blur Intensity */}
-        {type === "blur" && (
-          <CustomField
-            control={form.control}
-            name="prompt"
-            formLabel="Blur Intensity (100-2000)"
-            className="w-full"
-=======
         {type === "rotate" && (
           <CustomField
             control={form.control}
             name="angle"
             formLabel="Angle"
             className="flex-1"
->>>>>>> a88a43e (Rotate, Enhance, Search)
             render={({ field }) => (
               <Input
                 {...field}
                 type="number"
-<<<<<<< HEAD
-                min="100"
-                max="2000"
-                placeholder="300"
-                className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary focus:ring-2 focus:ring-primary"
-                onChange={(e) =>
-                  onInputChangeHandler(
-                    "intensity",
-                    e.target.value,
-                    "blur",
-=======
                 value={field.value ?? 0}
                 onChange={(e) =>
                   onInputChangeHandler(
                     "angle",
                     Number(e.target.value),
                     "rotate",
->>>>>>> a88a43e (Rotate, Enhance, Search)
                     field.onChange
                   )
                 }
@@ -400,72 +349,6 @@ const TransformationForm = ({
             )}
           />
         )}
-
-<<<<<<< HEAD
-        {/* Colorize Settings */}
-        {type === "colorize" && (
-          <div className="flex flex-col gap-4 md:flex-row md:gap-6">
-            <CustomField
-              control={form.control}
-              name="prompt"
-              formLabel="Color Level (0-100)"
-              className="flex-1"
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type="number"
-                  min="0"
-                  max="100"
-                  placeholder="50"
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary focus:ring-2 focus:ring-primary"
-                  onChange={(e) =>
-                    onInputChangeHandler(
-                      "level",
-                      e.target.value,
-                      "colorize",
-                      field.onChange
-                    )
-                  }
-                />
-              )}
-            />
-
-            <CustomField
-              control={form.control}
-              name="color"
-              formLabel="Color"
-              className="flex-1"
-              render={({ field }) => (
-                <Select
-                  onValueChange={(value) =>
-                    onInputChangeHandler(
-                      "color",
-                      value,
-                      "colorize",
-                      field.onChange
-                    )
-                  }
-                  value={field.value}
-                >
-                  <SelectTrigger className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-primary focus:ring-2 focus:ring-primary">
-                    <SelectValue placeholder="Select color" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="red">Red</SelectItem>
-                    <SelectItem value="blue">Blue</SelectItem>
-                    <SelectItem value="green">Green</SelectItem>
-                    <SelectItem value="yellow">Yellow</SelectItem>
-                    <SelectItem value="purple">Purple</SelectItem>
-                    <SelectItem value="orange">Orange</SelectItem>
-                    <SelectItem value="pink">Pink</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </div>
-        )}
-=======
->>>>>>> a88a43e (Rotate, Enhance, Search)
         {/* Image Upload & Preview */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <CustomField
