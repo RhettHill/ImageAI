@@ -27,7 +27,7 @@ const Sidebar = () => {
           <SignedIn>
             {/* First half of nav */}
             <ul className="flex flex-col gap-2">
-              {navLinks.slice(0, 11).map((link) => {
+              {navLinks.slice(0, 8).map((link) => {
                 const isActive = link.route === pathname;
                 return (
                   <li
@@ -58,7 +58,7 @@ const Sidebar = () => {
 
             {/* Second half of nav */}
             <ul className="flex flex-col gap-2">
-              {navLinks.slice(11).map((link) => {
+              {navLinks.slice(8).map((link) => {
                 const isActive = link.route === pathname;
                 return (
                   <li
@@ -86,7 +86,7 @@ const Sidebar = () => {
                 );
               })}
               {/* User Profile Button */}
-              <li className="flex items-center justify-center gap-2 p-4">
+              <li className="flex items-center gap-2 p-4">
                 <UserButton showName />
               </li>
             </ul>

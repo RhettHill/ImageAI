@@ -101,6 +101,8 @@ const TransformedImage = ({
     console.log("newUrl: ", image.publicId);
   };
 
+  console.log("transformedangle ", transformationConfig?.angle);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex-between">
@@ -129,6 +131,7 @@ const TransformedImage = ({
             sizes={"(max-width: 767px) 100vw, 50vw"}
             placeholder={dataUrl as PlaceholderValue}
             className="transformed-image"
+            angle={transformationConfig.angle}
             onLoad={() => {
               setIsTransforming && setIsTransforming(false);
             }}
@@ -141,7 +144,7 @@ const TransformedImage = ({
           />
 
           {isTransforming && (
-            <div className="flex items-center justify-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-dark-700/90">
+            <div className="flex items-center justify-center left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-dark-700/90">
               <Image
                 src="/assets/icons/spinner.svg"
                 width={50}

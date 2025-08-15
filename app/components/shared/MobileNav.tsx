@@ -81,7 +81,7 @@ const MobileNav = () => {
                   );
                 })}
                 {/* User Profile in Menu */}
-                <li className="flex items-center justify-center gap-2 p-4">
+                <li className="flex items-center justify-center gap-2 p-4 my-2">
                   <UserButton showName />
                 </li>
               </ul>

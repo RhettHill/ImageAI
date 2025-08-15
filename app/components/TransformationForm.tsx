@@ -44,6 +44,7 @@ export const formSchema = z.object({
   title: z.string(),
   aspectRatio: z.string().optional(),
   color: z.string().optional(),
+  angle: z.number().optional(),
   prompt: z.string().optional(),
   publicId: z.string(),
 });
@@ -170,11 +171,12 @@ const TransformationForm = ({
 
   const onInputChangeHandler = (
     fieldName: string,
-    value: string,
+    value: string | number,
     type: string,
     onChangeField: (value: string) => void
   ) => {
     debounce(() => {
+<<<<<<< HEAD
       if (type === "blur") {
         setNewTransformation((prevState: any) => ({
           ...prevState,
@@ -197,18 +199,34 @@ const TransformationForm = ({
           },
         }));
       }
+=======
+      setNewTransformation((prevState: any) => ({
+        ...prevState,
+        ...(type === "rotate"
+          ? { angle: value }
+          : {
+              [type]: {
+                ...prevState?.[type],
+                [fieldName === "prompt" ? "prompt" : "to"]: value,
+              },
+            }),
+      }));
+>>>>>>> a88a43e (Rotate, Enhance, Search)
     }, 1000)();
 
-    return onChangeField(value);
+    return onChangeField(value.toString());
   };
 
   const onTransformHandler = async () => {
     setIsTransforming(true);
 
-    setTransformationConfig(
-      deepMergeObjects(newTransformation, transformationConfig)
+    const mergedConfig = deepMergeObjects(
+      newTransformation,
+      transformationConfig
     );
 
+    // Immediately use mergedConfig for the URL or state
+    setTransformationConfig(mergedConfig);
     setNewTransformation(null);
 
     startTransition(async () => {
@@ -217,10 +235,19 @@ const TransformationForm = ({
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     if (image && (type === "restore" || type === "removeBackground" || type === "sharpen" || type === "grayscale" || type === "sepia" || type === "pixelate" || type === "cartoonify" || type === "oilPaint" || type === "vignette" || type === "improve")) {
+=======
+    if (
+      image &&
+      (type === "restore" || type === "removeBackground" || type === "enhance")
+    ) {
+>>>>>>> a88a43e (Rotate, Enhance, Search)
       setNewTransformation(transformationType.config);
     }
   }, [image, transformationType.config, type]);
+
+  console.log("Configs ", transformationConfig);
 
   return (
     <Form {...form}>
@@ -328,6 +355,7 @@ const TransformationForm = ({
           </div>
         )}
 
+<<<<<<< HEAD
         {/* Blur Intensity */}
         {type === "blur" && (
           <CustomField
@@ -335,10 +363,19 @@ const TransformationForm = ({
             name="prompt"
             formLabel="Blur Intensity (100-2000)"
             className="w-full"
+=======
+        {type === "rotate" && (
+          <CustomField
+            control={form.control}
+            name="angle"
+            formLabel="Angle"
+            className="flex-1"
+>>>>>>> a88a43e (Rotate, Enhance, Search)
             render={({ field }) => (
               <Input
                 {...field}
                 type="number"
+<<<<<<< HEAD
                 min="100"
                 max="2000"
                 placeholder="300"
@@ -348,6 +385,14 @@ const TransformationForm = ({
                     "intensity",
                     e.target.value,
                     "blur",
+=======
+                value={field.value ?? 0}
+                onChange={(e) =>
+                  onInputChangeHandler(
+                    "angle",
+                    Number(e.target.value),
+                    "rotate",
+>>>>>>> a88a43e (Rotate, Enhance, Search)
                     field.onChange
                   )
                 }
@@ -356,6 +401,7 @@ const TransformationForm = ({
           />
         )}
 
+<<<<<<< HEAD
         {/* Colorize Settings */}
         {type === "colorize" && (
           <div className="flex flex-col gap-4 md:flex-row md:gap-6">
@@ -418,6 +464,8 @@ const TransformationForm = ({
             />
           </div>
         )}
+=======
+>>>>>>> a88a43e (Rotate, Enhance, Search)
         {/* Image Upload & Preview */}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <CustomField

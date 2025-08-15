@@ -30,6 +30,7 @@ export const navLinks = [
     icon: "/assets/icons/camera.svg",
   },
   {
+<<<<<<< HEAD
     label: "Blur Effect",
     route: "/transformations/add/blur",
     icon: "/assets/icons/filter.svg",
@@ -55,6 +56,18 @@ export const navLinks = [
     icon: "/assets/icons/stars.svg",
   },
   {
+=======
+    label: "Rotate Image",
+    route: "/transformations/add/rotate",
+    icon: "/assets/icons/image.svg",
+  },
+  {
+    label: "Enhance Image",
+    route: "/transformations/add/enhance",
+    icon: "/assets/icons/filter.svg",
+  },
+  {
+>>>>>>> a88a43e (Rotate, Enhance, Search)
     label: "Profile",
     route: "/profile",
     icon: "/assets/icons/profile.svg",
@@ -130,6 +143,7 @@ export const transformationTypes = {
     },
     icon: "filter.svg",
   },
+<<<<<<< HEAD
   blur: {
     type: "blur",
     title: "Blur Effect",
@@ -199,6 +213,21 @@ export const transformationTypes = {
     subTitle: "Automatically enhance image quality",
     config: { improve: true },
     icon: "stars.svg",
+=======
+  rotate: {
+    type: "rotate",
+    title: "Rotate",
+    subTitle: "Rotate an image",
+    config: { angle: 90 },
+    icon: "scan.svg",
+  },
+  enhance: {
+    type: "enhance",
+    title: "Enhance Image",
+    subTitle: "Improve an image",
+    config: { enhance: true },
+    icon: "scan.svg",
+>>>>>>> a88a43e (Rotate, Enhance, Search)
   },
 };
 
